@@ -1,48 +1,54 @@
 <template>
   <div id="app">
-    
-
-      <div class="page-links">
-        <router-link to="/dashboard">Dashboard</router-link> /
-        <router-link to="/about">About</router-link> /
-        <button @click="goToPage(404)">404</button>
+    <header :class="[$style.header]">
+      My personal costs
+      <div>
+        <router-link :class="[$style.routerLink]" to="/dashboard">Dashboard</router-link>
+        <router-link :class="[$style.routerLink]" to="/about">About</router-link>
+        <router-link :class="[$style.routerLink]" to="/404">404</router-link>
       </div>
-
-      <div class="content">
-        <router-view />
-      </div>
-
-      
-      
-
-      
+    </header>
+    <main>
+      <router-view />
+    </main>
   </div>
 </template>
 
 <script>
-
-
-
+import { mapActions } from 'vuex'
 export default {
-  name: "App",
+  name: 'App',
   methods: {
-    goToPage(pageName) {
-      this.$router.push({
-        name: pageName
-      })
-    }
+    ...mapActions([
+      'fetchData'
+    ])
+  },
+  created () {
+    this.fetchData()
   }
-
-};
+}
 </script>
 
-<style lang="scss" module>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="sass" module>
+  *
+    margin: 0
+    padding: 0
+    font-family: sans-serif
+    box-sizing: border-box
+
+  .header
+    color: #234567
+    font-size: 24px
+    margin-bottom: 8px
+    display: flex
+    flex-direction: column
+
+  .routerLink
+    margin-right: 10px
+    font-size: 16px
+    color: #234567
+
+    &:hover
+      color: #66bcc7
+
 </style>
